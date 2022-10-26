@@ -39,7 +39,6 @@
             this.canvas.Size = new System.Drawing.Size(700, 700);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
-            this.canvas.Click += new System.EventHandler(this.canvas_Click);
             // 
             // Form1
             // 
@@ -47,6 +46,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 753);
             this.Controls.Add(this.canvas);
+            this.MaximumSize = new System.Drawing.Size(800, 800);
+            this.MinimumSize = new System.Drawing.Size(800, 800);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
