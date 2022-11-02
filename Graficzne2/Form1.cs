@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Timers;
 using System.Windows.Forms;
+using Graficzne2.Enums;
 using Graficzne2.Objects;
 using Timer = System.Windows.Forms.Timer;
 
@@ -13,7 +14,6 @@ namespace Graficzne2
         Graphics graphics;
         Pen pen = new Pen(Color.Black);
         DirectBitmap bitmap;
-
         LightSource lightSource;
         Timer timer;
 
@@ -28,6 +28,7 @@ namespace Graficzne2
             SetUpTimer();
             SetUpFaces();
             Draw();
+            //DrawTriangles();
         }
 
         private void SetUpCanvas()
@@ -77,9 +78,19 @@ namespace Graficzne2
 
         private void ColorFaces()
         {
-            foreach (var face in faces)
+            if (interpolateCornersButton.Checked)
             {
-                face.Color(bitmap, colorDialog.Color, lightSource);
+                foreach (var face in faces)
+                {
+                    face.Color(bitmap, colorDialog.Color, lightSource);
+                }
+            }
+            else if (interpolateEachButton.Checked)
+            {
+                foreach (var face in faces)
+                {
+                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource);
+                }
             }
         }
 

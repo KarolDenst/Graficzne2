@@ -26,10 +26,10 @@ namespace Graficzne2
                         switch (strings[0])
                         {
                             case "v":
-                                double x = (Convert.ToDouble(strings[1]) + offset) * scale;
-                                double y = (Convert.ToDouble(strings[2]) + offset) * scale;
-                                double z = (Convert.ToDouble(strings[3]) + offset) * scale;
-                                points.Add(new Point3d((int)z, (int)x, (int)y));
+                                double y = (Convert.ToDouble(strings[1]) + offset) * scale;
+                                double z = (Convert.ToDouble(strings[2])) * scale;
+                                double x = (Convert.ToDouble(strings[3]) + offset) * scale;
+                                points.Add(new Point3d((int)x, (int)y, (int)z));
                                 break;
                             case "f":
                                 string[] vertexes = strings[1].Split('/');

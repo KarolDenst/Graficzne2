@@ -54,7 +54,7 @@ namespace Graficzne2.Objects
             return new Vector3d(x, y, z);
         }
 
-        public static Vector3d operator *(int k, Vector3d v1)
+        public static Vector3d operator *(double k, Vector3d v1)
         {
             double x = v1.X * k;
             double y = v1.Y * k;

@@ -96,9 +96,54 @@ namespace Graficzne2.Objects
             }
         }
 
+        public void ColorEachPoint(DirectBitmap bitmap, Color objectColor, LightSource light)
+        {
+            int yMin = (int)P1.Y;
+            int yMax = (int)P3.Y;
+
+            List<Edge> aet = new List<Edge>();
+            aet.Add(new Edge(P1.TwoD(), P2.TwoD()));
+            aet.Add(new Edge(P1.TwoD(), P3.TwoD()));
+
+            for (int i = yMin; i < yMax; i++)
+            {
+                if (i == P2.Y)
+                {
+                    aet.Remove(new Edge(P1.TwoD(), P2.TwoD()));
+                    aet.Add(new Edge(P2.TwoD(), P3.TwoD()));
+                }
+
+                if (i == yMin)
+                {
+                    if (P1.Y != P2.Y) continue;
+                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, light, Vector, objectColor);
+                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, light, Vector, objectColor);
+                    continue;
+                }
+
+                aet = aet.OrderBy(p => p.GetX(i)).ToList();
+                int x1 = (int)aet[0].GetX(i);
+                int x2 = (int)aet[1].GetX(i);
+                bitmap.DrawScanLine(i, x1, x2, this, light, Vector, objectColor);
+            }
+        }
+
         public double Get2dArea()
         {
             return 1.0 / 2 * Math.Abs(P1.X * P2.Y - P2.X * P1.Y + P2.X * P3.Y - P3.X * P2.Y + P3.X * P1.Y - P1.X * P3.Y);
+        }
+
+        public Point3d GetPointByXY(int x, int y)
+        {
+            double det = (P2.Y - P3.Y) * (P1.X - P3.X) + (P3.X - P2.X) * (P1.Y - P3.Y);
+
+            double l1 = ((P2.Y - P3.Y) * (x - P3.X) + (P3.X - P2.X) * (y - P3.Y)) / det;
+            double l2 = ((P3.Y - P1.Y) * (x - P3.X) + (P1.X - P3.X) * (y - P3.Y)) / det;
+            double l3 = 1.0f - l1 - l2;
+
+            double z = l1 * P1.Z + l2 * P2.Z + l3 * P3.Z;
+
+            return new Point3d(x, y, z);
         }
     }
 }

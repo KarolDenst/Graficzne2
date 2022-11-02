@@ -2,7 +2,9 @@
 
 using Graficzne2;
 using Graficzne2.Objects;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
@@ -65,6 +67,16 @@ internal class DirectBitmap : IDisposable
         for (int x = x1; x <= x2; x++)
         {
             Color color = GetColor(face, p1Color, p2Color, p3Color, new Point(x, y));
+            SetPixel(x, y, color);
+        }
+    }
+
+    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Vector3d N, Color objectColor)
+    {
+        for (int x = x1; x <= x2; x++)
+        {
+            Point3d p = face.GetPointByXY(x, y);
+            Color color = light.GetColor(p.GetVersorToPoint(light.LightLocation), N, objectColor);
             SetPixel(x, y, color);
         }
     }

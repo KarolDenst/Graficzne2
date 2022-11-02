@@ -26,7 +26,7 @@ namespace Graficzne2
 
         public Color GetColor(Vector3d L, Vector3d N, Color objectColor)
         {
-            Vector3d R = 2 * (L * N) * N - L;
+            Vector3d R = 2 * (N.X * L.X + N.Y * L.Y + N.Z * L.Z) * N - L;
             Vector3d V = new Vector3d(0, 0, 1);
             double cos1 = Vector3d.GetCosBetweenNormal(N, L);
             if (cos1 < 0) cos1 = 0;

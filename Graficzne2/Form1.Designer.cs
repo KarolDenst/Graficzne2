@@ -30,6 +30,8 @@
         {
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.zBar = new System.Windows.Forms.TrackBar();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -39,14 +41,14 @@
             this.chooseColorButton = new System.Windows.Forms.Button();
             this.drawButton = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.zBar = new System.Windows.Forms.TrackBar();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.interpolateCornersButton = new System.Windows.Forms.RadioButton();
+            this.interpolateEachButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
             this.SuspendLayout();
             // 
             // canvas
@@ -59,6 +61,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.interpolateEachButton);
+            this.groupBox1.Controls.Add(this.interpolateCornersButton);
             this.groupBox1.Controls.Add(this.textBox4);
             this.groupBox1.Controls.Add(this.zBar);
             this.groupBox1.Controls.Add(this.textBox3);
@@ -75,6 +79,23 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Location = new System.Drawing.Point(3, 294);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(36, 27);
+            this.textBox4.TabIndex = 9;
+            this.textBox4.Text = "Z";
+            // 
+            // zBar
+            // 
+            this.zBar.Location = new System.Drawing.Point(38, 294);
+            this.zBar.Name = "zBar";
+            this.zBar.Size = new System.Drawing.Size(133, 56);
+            this.zBar.TabIndex = 8;
+            this.zBar.Scroll += new System.EventHandler(this.zBar_Scroll);
             // 
             // textBox3
             // 
@@ -153,22 +174,28 @@
             // 
             this.colorDialog.Color = System.Drawing.Color.Red;
             // 
-            // zBar
+            // interpolateCornersButton
             // 
-            this.zBar.Location = new System.Drawing.Point(38, 294);
-            this.zBar.Name = "zBar";
-            this.zBar.Size = new System.Drawing.Size(133, 56);
-            this.zBar.TabIndex = 8;
-            this.zBar.Scroll += new System.EventHandler(this.zBar_Scroll);
+            this.interpolateCornersButton.AutoSize = true;
+            this.interpolateCornersButton.Checked = true;
+            this.interpolateCornersButton.Location = new System.Drawing.Point(6, 345);
+            this.interpolateCornersButton.Name = "interpolateCornersButton";
+            this.interpolateCornersButton.Size = new System.Drawing.Size(157, 24);
+            this.interpolateCornersButton.TabIndex = 10;
+            this.interpolateCornersButton.TabStop = true;
+            this.interpolateCornersButton.Text = "Interpolate Corners";
+            this.interpolateCornersButton.UseVisualStyleBackColor = true;
             // 
-            // textBox4
+            // interpolateEachButton
             // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(3, 294);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(36, 27);
-            this.textBox4.TabIndex = 9;
-            this.textBox4.Text = "Z";
+            this.interpolateEachButton.AutoSize = true;
+            this.interpolateEachButton.Location = new System.Drawing.Point(6, 375);
+            this.interpolateEachButton.Name = "interpolateEachButton";
+            this.interpolateEachButton.Size = new System.Drawing.Size(138, 24);
+            this.interpolateEachButton.TabIndex = 11;
+            this.interpolateEachButton.TabStop = true;
+            this.interpolateEachButton.Text = "Interpolate Each";
+            this.interpolateEachButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -184,10 +211,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -207,5 +234,7 @@
         private TextBox textBox1;
         private TextBox textBox4;
         private TrackBar zBar;
+        private RadioButton interpolateEachButton;
+        private RadioButton interpolateCornersButton;
     }
 }

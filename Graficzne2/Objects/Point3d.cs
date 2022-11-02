@@ -62,7 +62,7 @@ namespace Graficzne2.Objects
 
         public Vector3d GetVersorToPoint(Point3d p)
         {
-            Vector3d v = new Vector3d(this - p);
+            Vector3d v = new Vector3d(p - this);
             v.Normalize();
 
             return v;
