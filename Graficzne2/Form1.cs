@@ -90,7 +90,7 @@ namespace Graficzne2
             {
                 foreach (var face in faces)
                 {
-                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource);
+                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource, center);
                 }
             }
         }

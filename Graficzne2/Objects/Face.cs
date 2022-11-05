@@ -102,7 +102,7 @@ namespace Graficzne2.Objects
             }
         }
 
-        public void ColorEachPoint(DirectBitmap bitmap, Color objectColor, LightSource light)
+        public void ColorEachPoint(DirectBitmap bitmap, Color objectColor, LightSource light, Point center)
         {
             int yMin = (int)P1.Y;
             int yMax = (int)P3.Y;
@@ -122,15 +122,15 @@ namespace Graficzne2.Objects
                 if (i == yMin)
                 {
                     if (P1.Y != P2.Y) continue;
-                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, light, Vector, objectColor);
-                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, light, Vector, objectColor);
+                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, light, objectColor, center);
+                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, light, objectColor, center);
                     continue;
                 }
 
                 aet = aet.OrderBy(p => p.GetX(i)).ToList();
                 int x1 = (int)aet[0].GetX(i);
                 int x2 = (int)aet[1].GetX(i);
-                bitmap.DrawScanLine(i, x1, x2, this, light, Vector, objectColor);
+                bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, center);
             }
         }
 

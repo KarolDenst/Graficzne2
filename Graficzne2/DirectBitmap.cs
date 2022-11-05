@@ -71,11 +71,13 @@ internal class DirectBitmap : IDisposable
         }
     }
 
-    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Vector3d N, Color objectColor)
+    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Color objectColor, Point center)
     {
         for (int x = x1; x <= x2; x++)
         {
             Point3d p = face.GetPointByXY(x, y);
+            Vector3d N = new Vector3d(p.X - center.X, p.Y - center.Y, p.Z);
+            N.Normalize();
             Color color = light.GetColor(p.GetVersorToPoint(light.LightLocation), N, objectColor);
             SetPixel(x, y, color);
         }
