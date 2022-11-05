@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,6 @@ namespace Graficzne2.Objects
         public Point3d P2;
         public Point3d P3;
 
-        public Vector3d Vector;
         public double Area;
 
         public Face(Point3d p1, Point3d p2, Point3d p3)
@@ -24,7 +24,6 @@ namespace Graficzne2.Objects
             P2 = points[1];
             P3 = points[2];
 
-            Vector = Vector3d.GetUnitVector3d(p1, p2, p3);
             Area = Get2dArea();
         }
 
@@ -60,11 +59,18 @@ namespace Graficzne2.Objects
             }
         }
 
-        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light)
+        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, Point center)
         {
-            Color colorP1 = light.GetColor(P1.GetVersorToPoint(light.LightLocation), Vector, objectColor);
-            Color colorP2 = light.GetColor(P2.GetVersorToPoint(light.LightLocation), Vector, objectColor);
-            Color colorP3 = light.GetColor(P3.GetVersorToPoint(light.LightLocation), Vector, objectColor);
+            Vector3d v1 = new Vector3d(P1.X - center.X, P1.Y - center.Y, P1.Z);
+            v1.Normalize();
+            Vector3d v2 = new Vector3d(P2.X - center.X, P2.Y - center.Y, P2.Z);
+            v2.Normalize();
+            Vector3d v3 = new Vector3d(P3.X - center.X, P3.Y - center.Y, P3.Z);
+            v3.Normalize();
+
+            Color colorP1 = light.GetColor(P1.GetVersorToPoint(light.LightLocation), v1, objectColor);
+            Color colorP2 = light.GetColor(P2.GetVersorToPoint(light.LightLocation), v2, objectColor);
+            Color colorP3 = light.GetColor(P3.GetVersorToPoint(light.LightLocation), v3, objectColor);
 
             int yMin = (int)P1.Y;
             int yMax = (int)P3.Y;

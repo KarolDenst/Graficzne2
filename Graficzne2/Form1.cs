@@ -78,11 +78,12 @@ namespace Graficzne2
 
         private void ColorFaces()
         {
+            Point center = new Point(canvas.Width / 2, canvas.Height / 2);
             if (interpolateCornersButton.Checked)
             {
                 foreach (var face in faces)
                 {
-                    face.Color(bitmap, colorDialog.Color, lightSource);
+                    face.Color(bitmap, colorDialog.Color, lightSource, center);
                 }
             }
             else if (interpolateEachButton.Checked)
