@@ -47,7 +47,10 @@ namespace Graficzne2
         {
             double radians = Math.PI / 180 * degrees;
             Vector3d v = new Vector3d(LightLocation.X - middleX, LightLocation.Y - middleY, 0);
+            double length = v.GetLength();
             v.RotateRadians(radians);
+            double newLength = v.GetLength();
+            v = length / newLength * v;
             LightLocation.X = middleX + v.X;
             LightLocation.Y = middleY + v.Y;
         }

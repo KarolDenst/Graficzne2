@@ -95,16 +95,15 @@ namespace Graficzne2
             }
         }
 
-        private void drawButton_Click(object sender, EventArgs e)
-        {
-            if (timer.Enabled) timer.Enabled = false;
-            else timer.Enabled = true;
-        }
-
         private void Draw()
         {
             ColorFaces();
             canvas.Refresh();
+        }
+
+        private void DrawIfTimerNotRunning()
+        {
+            if (!timer.Enabled) Draw();
         }
 
         private void OnTimedEvent(object source, EventArgs e)
@@ -113,29 +112,40 @@ namespace Graficzne2
             Draw();
         }
 
+        private void drawButton_Click(object sender, EventArgs e)
+        {
+            if (timer.Enabled) timer.Enabled = false;
+            else timer.Enabled = true;
+        }
+
         private void chooseColorButton_Click(object sender, EventArgs e)
         {
             colorDialog.ShowDialog();
+            DrawIfTimerNotRunning();
         }
 
         private void kdBar_Scroll(object sender, EventArgs e)
         {
             lightSource.Kd = (double)kdBar.Value / 10;
+            DrawIfTimerNotRunning();
         }
 
         private void ksBar_Scroll(object sender, EventArgs e)
         {
             lightSource.Ks = (double)ksBar.Value / 10;
+            DrawIfTimerNotRunning();
         }
 
         private void mBar_Scroll(object sender, EventArgs e)
         {
             lightSource.M = mBar.Value * 10 + 1;
+            DrawIfTimerNotRunning();
         }
 
         private void zBar_Scroll(object sender, EventArgs e)
         {
             lightSource.LightLocation.Z = Constants.MinLightHeight + zBar.Value * 50;
+            DrawIfTimerNotRunning();
         }
     }
 }
