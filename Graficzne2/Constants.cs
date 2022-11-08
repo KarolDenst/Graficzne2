@@ -8,7 +8,7 @@ namespace Graficzne2
 {
     public static class Constants
     {
-        public static string PathToSphere = "..\\..\\..\\..\\Objects\\ico2-level4.obj";
+        public static string PathToSphere = "..\\..\\..\\..\\Objects\\sphere.obj";
         public static string TextureLocation = "..\\..\\..\\..\\Textures";
 
         public static int MinLightHeight = 500;
