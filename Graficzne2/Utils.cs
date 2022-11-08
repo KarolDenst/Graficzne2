@@ -60,5 +60,27 @@ namespace Graficzne2
             return faces.ToArray();
         }
 
+        public static Vector3d GetVector(Face face, Point p)
+        {
+            double area = face.Area;
+            Point p1 = face.P1.TwoD();
+            Point p2 = face.P2.TwoD();
+            Point p3 = face.P3.TwoD();
+
+            double p1Area = Geometry.Get2dArea(p, p2, p3);
+            double p2Area = Geometry.Get2dArea(p, p1, p3);
+            double p3Area = Geometry.Get2dArea(p, p2, p1);
+
+            double p1Ratio = p1Area / area;
+            double p2Ratio = p2Area / area;
+            double p3Ratio = p3Area / area;
+
+            double X = face.V1.X * p1Ratio + face.V2.X * p2Ratio + face.V3.X * p3Ratio;
+            double Y = face.V1.Y * p1Ratio + face.V2.Y * p2Ratio + face.V3.Y * p3Ratio;
+            double Z = face.V1.Z * p1Ratio + face.V2.Z * p2Ratio + face.V3.Z * p3Ratio;
+
+            return new Vector3d(X, Y, Z);
+        }
+
     }
 }

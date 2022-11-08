@@ -30,6 +30,8 @@
         {
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.resetTextureButton = new System.Windows.Forms.Button();
+            this.loadTextureButton = new System.Windows.Forms.Button();
             this.drawTrianglesCheckbox = new System.Windows.Forms.CheckBox();
             this.lightColorButton = new System.Windows.Forms.Button();
             this.interpolateEachButton = new System.Windows.Forms.RadioButton();
@@ -46,7 +48,7 @@
             this.drawButton = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
-            this.loadTextureButton = new System.Windows.Forms.Button();
+            this.loadObjectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
@@ -65,6 +67,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.loadObjectButton);
+            this.groupBox1.Controls.Add(this.resetTextureButton);
             this.groupBox1.Controls.Add(this.loadTextureButton);
             this.groupBox1.Controls.Add(this.drawTrianglesCheckbox);
             this.groupBox1.Controls.Add(this.lightColorButton);
@@ -86,6 +90,26 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // resetTextureButton
+            // 
+            this.resetTextureButton.Location = new System.Drawing.Point(3, 512);
+            this.resetTextureButton.Name = "resetTextureButton";
+            this.resetTextureButton.Size = new System.Drawing.Size(168, 29);
+            this.resetTextureButton.TabIndex = 15;
+            this.resetTextureButton.Text = "Reset Texture";
+            this.resetTextureButton.UseVisualStyleBackColor = true;
+            this.resetTextureButton.Click += new System.EventHandler(this.resetTextureButton_Click);
+            // 
+            // loadTextureButton
+            // 
+            this.loadTextureButton.Location = new System.Drawing.Point(3, 477);
+            this.loadTextureButton.Name = "loadTextureButton";
+            this.loadTextureButton.Size = new System.Drawing.Size(168, 29);
+            this.loadTextureButton.TabIndex = 14;
+            this.loadTextureButton.Text = "Load Texture";
+            this.loadTextureButton.UseVisualStyleBackColor = true;
+            this.loadTextureButton.Click += new System.EventHandler(this.loadTextureButton_Click);
             // 
             // drawTrianglesCheckbox
             // 
@@ -226,15 +250,15 @@
             // 
             this.colorDialog.Color = System.Drawing.Color.Gold;
             // 
-            // loadTextureButton
+            // loadObjectButton
             // 
-            this.loadTextureButton.Location = new System.Drawing.Point(3, 503);
-            this.loadTextureButton.Name = "loadTextureButton";
-            this.loadTextureButton.Size = new System.Drawing.Size(168, 29);
-            this.loadTextureButton.TabIndex = 14;
-            this.loadTextureButton.Text = "Load Texture";
-            this.loadTextureButton.UseVisualStyleBackColor = true;
-            this.loadTextureButton.Click += new System.EventHandler(this.loadTextureButton_Click);
+            this.loadObjectButton.Location = new System.Drawing.Point(6, 424);
+            this.loadObjectButton.Name = "loadObjectButton";
+            this.loadObjectButton.Size = new System.Drawing.Size(162, 29);
+            this.loadObjectButton.TabIndex = 16;
+            this.loadObjectButton.Text = "Load Object";
+            this.loadObjectButton.UseVisualStyleBackColor = true;
+            this.loadObjectButton.Click += new System.EventHandler(this.loadObjectButton_Click);
             // 
             // Form1
             // 
@@ -279,5 +303,7 @@
         private ColorDialog lightColorDialog;
         private CheckBox drawTrianglesCheckbox;
         private Button loadTextureButton;
+        private Button resetTextureButton;
+        private Button loadObjectButton;
     }
 }

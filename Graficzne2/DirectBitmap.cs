@@ -63,26 +63,41 @@ internal class DirectBitmap : IDisposable
         }
     }
 
-    public void DrawScanLine(int y, int x1, int x2, Face face, Color p1Color, Color p2Color, Color p3Color)
+    public void DrawScanLineFromCorners(int y, int x1, int x2, Face face, LightSource light, Color objectColor, bool useTexture)
     {
+        Vector3d v1, v2, v3;
+        if (useTexture)
+        {
+            v1 = face.V1.GetModifiedVector(Texture[(int)face.P1.X, (int)face.P1.Y]);
+            v2 = face.V2.GetModifiedVector(Texture[(int)face.P2.X, (int)face.P2.Y]);
+            v3 = face.V3.GetModifiedVector(Texture[(int)face.P3.X, (int)face.P3.Y]);
+        }
+        else
+        {
+            v1 = face.V1;
+            v2 = face.V2;
+            v3 = face.V3;
+        }
+
+        Color colorP1 = light.GetColor(face.P1.GetVersorToPoint(light.LightLocation), v1, objectColor);
+        Color colorP2 = light.GetColor(face.P2.GetVersorToPoint(light.LightLocation), v2, objectColor);
+        Color colorP3 = light.GetColor(face.P3.GetVersorToPoint(light.LightLocation), v3, objectColor);
+
         for (int x = x1; x <= x2; x++)
         {
-            Color color = GetColor(face, p1Color, p2Color, p3Color, new Point(x, y));
+            Color color = GetColor(face, colorP1, colorP2, colorP3, new Point(x, y));
             SetPixel(x, y, color);
         }
     }
 
-    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Color objectColor, Point center, bool useTexture)
+    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Color objectColor, bool useTexture)
     {
         for (int x = x1; x <= x2; x++)
         {
             Point3d p = face.GetPointByXY(x, y);
 
-            //Vector3d N = new Vector3d(p.X - center.X, p.Y - center.Y, p.Z);
-            //N.Normalize();
             Point p2 = new Point(x, y);
-            Vector3d N = GetVector(face, p2);
-
+            Vector3d N = Utils.GetVector(face, p2);
 
             if (useTexture) N = N.GetModifiedVector(Texture[x, y]);
             Color color = light.GetColor(p.GetVersorToPoint(light.LightLocation), N, objectColor);
@@ -113,28 +128,6 @@ internal class DirectBitmap : IDisposable
         if (blue > 255) blue = 255;
 
         return Color.FromArgb(255, (int)red, (int)green, (int)blue);
-    }
-
-    private Vector3d GetVector(Face face, Point p)
-    {
-        double area = face.Area;
-        Point p1 = face.P1.TwoD();
-        Point p2 = face.P2.TwoD();
-        Point p3 = face.P3.TwoD();
-
-        double p1Area = Geometry.Get2dArea(p, p2, p3);
-        double p2Area = Geometry.Get2dArea(p, p1, p3);
-        double p3Area = Geometry.Get2dArea(p, p2, p1);
-
-        double p1Ratio = p1Area / area;
-        double p2Ratio = p2Area / area;
-        double p3Ratio = p3Area / area;
-
-        double X = face.V1.X * p1Ratio + face.V2.X * p2Ratio + face.V3.X * p3Ratio;
-        double Y = face.V1.Y * p1Ratio + face.V2.Y * p2Ratio + face.V3.Y * p3Ratio;
-        double Z = face.V1.Z * p1Ratio + face.V2.Z * p2Ratio + face.V3.Z * p3Ratio;
-
-        return new Vector3d(X, Y, Z);
     }
 
     public void SetUpTexture(Bitmap bitmap)

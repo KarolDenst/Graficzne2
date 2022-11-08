@@ -10,6 +10,7 @@ namespace Graficzne2
     {
         public static string PathToSphere = "..\\..\\..\\..\\Objects\\sphere.obj";
         public static string TextureLocation = "..\\..\\..\\..\\Textures";
+        public static string ObjectLocation = "..\\..\\..\\..\\Objects";
 
         public static int MinLightHeight = 500;
         public static int LightSourceX = 0;

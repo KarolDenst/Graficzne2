@@ -27,7 +27,7 @@ namespace Graficzne2
             SetUpCanvas();
             SetUpLightSource();
             SetUpTimer();
-            SetUpFaces();
+            SetUpFaces(Constants.PathToSphere);
             Draw();
 
             var p = Directory.GetCurrentDirectory();
@@ -52,11 +52,11 @@ namespace Graficzne2
             timer.Interval = 1000 / Constants.fps;
         }
 
-        private void SetUpFaces()
+        private void SetUpFaces(string path)
         {
             double scale = canvas.Width / 2;
             double offset = 1;
-            faces = Utils.SetUpFaceArrayFromFile(Constants.PathToSphere, scale, offset);
+            faces = Utils.SetUpFaceArrayFromFile(path, scale, offset);
         }
 
         private void DrawTriangles()
@@ -80,19 +80,18 @@ namespace Graficzne2
 
         private void ColorFaces()
         {
-            Point center = new Point(canvas.Width / 2, canvas.Height / 2);
             if (interpolateCornersButton.Checked)
             {
                 foreach (var face in faces)
                 {
-                    face.Color(bitmap, colorDialog.Color, lightSource, center);
+                    face.Color(bitmap, colorDialog.Color, lightSource, useTexture);
                 }
             }
             else if (interpolateEachButton.Checked)
             {
                 foreach (var face in faces)
                 {
-                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource, center, useTexture);
+                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource, useTexture);
                 }
             }
         }
@@ -178,13 +177,36 @@ namespace Graficzne2
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = "Open Texture";
-                //dlg.Filter = "bmp files (*.bmp)|*.bmp";
                 dlg.InitialDirectory = Constants.TextureLocation;
+                dlg.AutoUpgradeEnabled = false;
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     bitmap.SetUpTexture(new Bitmap(dlg.FileName));
                     useTexture = true;
+                    DrawIfTimerNotRunning();
+                }
+            }
+        }
+
+        private void resetTextureButton_Click(object sender, EventArgs e)
+        {
+            useTexture = false;
+            DrawIfTimerNotRunning();
+        }
+
+        private void loadObjectButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Object";
+                dlg.InitialDirectory = Constants.ObjectLocation;
+                dlg.AutoUpgradeEnabled = false;
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    SetUpFaces(dlg.FileName);
+                    SetUpCanvas();
                     DrawIfTimerNotRunning();
                 }
             }

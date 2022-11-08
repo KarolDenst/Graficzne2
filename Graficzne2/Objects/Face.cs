@@ -68,22 +68,8 @@ namespace Graficzne2.Objects
             }
         }
 
-        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, Point center)
+        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, bool useTexture = false)
         {
-            //Vector3d v1 = new Vector3d(P1.X - center.X, P1.Y - center.Y, P1.Z);
-            //v1.Normalize();
-            //Vector3d v2 = new Vector3d(P2.X - center.X, P2.Y - center.Y, P2.Z);
-            //v2.Normalize();
-            //Vector3d v3 = new Vector3d(P3.X - center.X, P3.Y - center.Y, P3.Z);
-            //v3.Normalize();
-            var v1 = V1;
-            var v2 = V2;
-            var v3 = V3;
-
-            Color colorP1 = light.GetColor(P1.GetVersorToPoint(light.LightLocation), v1, objectColor);
-            Color colorP2 = light.GetColor(P2.GetVersorToPoint(light.LightLocation), v2, objectColor);
-            Color colorP3 = light.GetColor(P3.GetVersorToPoint(light.LightLocation), v3, objectColor);
-
             int yMin = (int)P1.Y;
             int yMax = (int)P3.Y;
 
@@ -102,19 +88,19 @@ namespace Graficzne2.Objects
                 if (i == yMin)
                 {
                     if (P1.Y != P2.Y) continue;
-                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, colorP1, colorP2, colorP3);
-                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, colorP1, colorP2, colorP3);
+                    if (P1.X > P2.X) bitmap.DrawScanLineFromCorners(i, (int)P2.X, (int)P1.X, this, light, objectColor, useTexture);
+                    else bitmap.DrawScanLineFromCorners(i, (int)P1.X, (int)P2.X, this, light, objectColor, useTexture);
                     continue;
                 }
 
                 aet = aet.OrderBy(p => p.GetX(i)).ToList();
                 int x1 = (int)aet[0].GetX(i);
                 int x2 = (int)aet[1].GetX(i);
-                bitmap.DrawScanLine(i, x1, x2, this, colorP1, colorP2, colorP3);
+                bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useTexture);
             }
         }
 
-        public void ColorEachPoint(DirectBitmap bitmap, Color objectColor, LightSource light, Point center, bool useTexture)
+        public void ColorEachPoint(DirectBitmap bitmap, Color objectColor, LightSource light, bool useTexture)
         {
             int yMin = (int)P1.Y;
             int yMax = (int)P3.Y;
@@ -134,15 +120,15 @@ namespace Graficzne2.Objects
                 if (i == yMin)
                 {
                     if (P1.Y != P2.Y) continue;
-                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, light, objectColor, center, useTexture);
-                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, light, objectColor, center, useTexture);
+                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, light, objectColor, useTexture);
+                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, light, objectColor, useTexture);
                     continue;
                 }
 
                 aet = aet.OrderBy(p => p.GetX(i)).ToList();
                 int x1 = (int)aet[0].GetX(i);
                 int x2 = (int)aet[1].GetX(i);
-                bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, center, useTexture);
+                bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useTexture);
             }
         }
 
