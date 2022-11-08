@@ -15,6 +15,7 @@ internal class DirectBitmap : IDisposable
     public bool Disposed { get; private set; }
     public int Height { get; private set; }
     public int Width { get; private set; }
+    public Vector3d[,] Texture { get;private set; }
 
     protected GCHandle BitsHandle { get; private set; }
 
@@ -71,13 +72,14 @@ internal class DirectBitmap : IDisposable
         }
     }
 
-    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Color objectColor, Point center)
+    public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Color objectColor, Point center, bool useTexture)
     {
         for (int x = x1; x <= x2; x++)
         {
             Point3d p = face.GetPointByXY(x, y);
             Vector3d N = new Vector3d(p.X - center.X, p.Y - center.Y, p.Z);
             N.Normalize();
+            if (useTexture) N = N.GetModifiedVector(Texture[x, y]);
             Color color = light.GetColor(p.GetVersorToPoint(light.LightLocation), N, objectColor);
             SetPixel(x, y, color);
         }
@@ -106,5 +108,17 @@ internal class DirectBitmap : IDisposable
         if (blue > 255) blue = 255;
 
         return Color.FromArgb(255, (int)red, (int)green, (int)blue);
+    }
+
+    public void SetUpTexture(Bitmap bitmap)
+    {
+        Texture = new Vector3d[bitmap.Width, bitmap.Height];
+        for (int i = 0; i < bitmap.Width; i++)
+        {
+            for (int j = 0; j < bitmap.Height; j++)
+            {
+                Texture[i, j] = Vector3d.GetFromColor(bitmap.GetPixel(i, j));
+            }
+        }
     }
 }

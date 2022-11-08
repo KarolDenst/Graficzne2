@@ -16,6 +16,7 @@ namespace Graficzne2
         DirectBitmap bitmap;
         LightSource lightSource;
         Timer timer;
+        bool useTexture = false;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Form1()
@@ -28,7 +29,8 @@ namespace Graficzne2
             SetUpTimer();
             SetUpFaces();
             Draw();
-            //DrawTriangles();
+
+            var p = Directory.GetCurrentDirectory();
         }
 
         private void SetUpCanvas()
@@ -90,7 +92,7 @@ namespace Graficzne2
             {
                 foreach (var face in faces)
                 {
-                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource, center);
+                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource, center, useTexture);
                 }
             }
         }
@@ -98,6 +100,7 @@ namespace Graficzne2
         private void Draw()
         {
             ColorFaces();
+            if (drawTrianglesCheckbox.Checked) DrawTriangles();
             canvas.Refresh();
         }
 
@@ -124,6 +127,13 @@ namespace Graficzne2
             DrawIfTimerNotRunning();
         }
 
+        private void lightColorButton_Click(object sender, EventArgs e)
+        {
+            if (lightColorDialog.ShowDialog() == DialogResult.OK)
+                lightSource.LightColor = lightColorDialog.Color;
+            DrawIfTimerNotRunning();
+        }
+
         private void kdBar_Scroll(object sender, EventArgs e)
         {
             lightSource.Kd = (double)kdBar.Value / 10;
@@ -146,6 +156,38 @@ namespace Graficzne2
         {
             lightSource.LightLocation.Z = Constants.MinLightHeight + zBar.Value * 50;
             DrawIfTimerNotRunning();
+        }
+
+        private void interpolateCornersButton_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawIfTimerNotRunning();
+        }
+
+        private void interpolateEachButton_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawIfTimerNotRunning();
+        }
+
+        private void drawTrianglesCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawIfTimerNotRunning();
+        }
+
+        private void loadTextureButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Texture";
+                //dlg.Filter = "bmp files (*.bmp)|*.bmp";
+                dlg.InitialDirectory = Constants.TextureLocation;
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    bitmap.SetUpTexture(new Bitmap(dlg.FileName));
+                    useTexture = true;
+                    DrawIfTimerNotRunning();
+                }
+            }
         }
     }
 }

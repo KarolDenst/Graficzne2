@@ -30,6 +30,10 @@
         {
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.drawTrianglesCheckbox = new System.Windows.Forms.CheckBox();
+            this.lightColorButton = new System.Windows.Forms.Button();
+            this.interpolateEachButton = new System.Windows.Forms.RadioButton();
+            this.interpolateCornersButton = new System.Windows.Forms.RadioButton();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.zBar = new System.Windows.Forms.TrackBar();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -41,8 +45,8 @@
             this.chooseColorButton = new System.Windows.Forms.Button();
             this.drawButton = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.interpolateCornersButton = new System.Windows.Forms.RadioButton();
-            this.interpolateEachButton = new System.Windows.Forms.RadioButton();
+            this.lightColorDialog = new System.Windows.Forms.ColorDialog();
+            this.loadTextureButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
@@ -61,6 +65,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.loadTextureButton);
+            this.groupBox1.Controls.Add(this.drawTrianglesCheckbox);
+            this.groupBox1.Controls.Add(this.lightColorButton);
             this.groupBox1.Controls.Add(this.interpolateEachButton);
             this.groupBox1.Controls.Add(this.interpolateCornersButton);
             this.groupBox1.Controls.Add(this.textBox4);
@@ -80,10 +87,55 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // drawTrianglesCheckbox
+            // 
+            this.drawTrianglesCheckbox.AutoSize = true;
+            this.drawTrianglesCheckbox.Location = new System.Drawing.Point(6, 299);
+            this.drawTrianglesCheckbox.Name = "drawTrianglesCheckbox";
+            this.drawTrianglesCheckbox.Size = new System.Drawing.Size(129, 24);
+            this.drawTrianglesCheckbox.TabIndex = 13;
+            this.drawTrianglesCheckbox.Text = "Draw Triangles";
+            this.drawTrianglesCheckbox.UseVisualStyleBackColor = true;
+            this.drawTrianglesCheckbox.CheckedChanged += new System.EventHandler(this.drawTrianglesCheckbox_CheckedChanged);
+            // 
+            // lightColorButton
+            // 
+            this.lightColorButton.Location = new System.Drawing.Point(3, 89);
+            this.lightColorButton.Name = "lightColorButton";
+            this.lightColorButton.Size = new System.Drawing.Size(168, 29);
+            this.lightColorButton.TabIndex = 12;
+            this.lightColorButton.Text = "Choose light Color";
+            this.lightColorButton.UseVisualStyleBackColor = true;
+            this.lightColorButton.Click += new System.EventHandler(this.lightColorButton_Click);
+            // 
+            // interpolateEachButton
+            // 
+            this.interpolateEachButton.AutoSize = true;
+            this.interpolateEachButton.Checked = true;
+            this.interpolateEachButton.Location = new System.Drawing.Point(6, 375);
+            this.interpolateEachButton.Name = "interpolateEachButton";
+            this.interpolateEachButton.Size = new System.Drawing.Size(138, 24);
+            this.interpolateEachButton.TabIndex = 11;
+            this.interpolateEachButton.TabStop = true;
+            this.interpolateEachButton.Text = "Interpolate Each";
+            this.interpolateEachButton.UseVisualStyleBackColor = true;
+            this.interpolateEachButton.CheckedChanged += new System.EventHandler(this.interpolateEachButton_CheckedChanged);
+            // 
+            // interpolateCornersButton
+            // 
+            this.interpolateCornersButton.AutoSize = true;
+            this.interpolateCornersButton.Location = new System.Drawing.Point(6, 345);
+            this.interpolateCornersButton.Name = "interpolateCornersButton";
+            this.interpolateCornersButton.Size = new System.Drawing.Size(157, 24);
+            this.interpolateCornersButton.TabIndex = 10;
+            this.interpolateCornersButton.Text = "Interpolate Corners";
+            this.interpolateCornersButton.UseVisualStyleBackColor = true;
+            this.interpolateCornersButton.CheckedChanged += new System.EventHandler(this.interpolateCornersButton_CheckedChanged);
+            // 
             // textBox4
             // 
             this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(3, 294);
+            this.textBox4.Location = new System.Drawing.Point(3, 256);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(36, 27);
             this.textBox4.TabIndex = 9;
@@ -91,7 +143,7 @@
             // 
             // zBar
             // 
-            this.zBar.Location = new System.Drawing.Point(38, 294);
+            this.zBar.Location = new System.Drawing.Point(38, 256);
             this.zBar.Name = "zBar";
             this.zBar.Size = new System.Drawing.Size(133, 56);
             this.zBar.TabIndex = 8;
@@ -100,7 +152,7 @@
             // textBox3
             // 
             this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(3, 243);
+            this.textBox3.Location = new System.Drawing.Point(3, 214);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(36, 27);
             this.textBox3.TabIndex = 7;
@@ -109,7 +161,7 @@
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(3, 177);
+            this.textBox2.Location = new System.Drawing.Point(3, 166);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(36, 27);
             this.textBox2.TabIndex = 6;
@@ -118,7 +170,7 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(3, 114);
+            this.textBox1.Location = new System.Drawing.Point(3, 124);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(36, 27);
             this.textBox1.TabIndex = 5;
@@ -126,7 +178,7 @@
             // 
             // mBar
             // 
-            this.mBar.Location = new System.Drawing.Point(38, 238);
+            this.mBar.Location = new System.Drawing.Point(38, 214);
             this.mBar.Name = "mBar";
             this.mBar.Size = new System.Drawing.Size(139, 56);
             this.mBar.TabIndex = 4;
@@ -134,7 +186,7 @@
             // 
             // ksBar
             // 
-            this.ksBar.Location = new System.Drawing.Point(38, 176);
+            this.ksBar.Location = new System.Drawing.Point(38, 166);
             this.ksBar.Name = "ksBar";
             this.ksBar.Size = new System.Drawing.Size(136, 56);
             this.ksBar.TabIndex = 3;
@@ -143,7 +195,7 @@
             // 
             // kdBar
             // 
-            this.kdBar.Location = new System.Drawing.Point(38, 114);
+            this.kdBar.Location = new System.Drawing.Point(38, 124);
             this.kdBar.Name = "kdBar";
             this.kdBar.Size = new System.Drawing.Size(130, 56);
             this.kdBar.TabIndex = 2;
@@ -152,11 +204,11 @@
             // 
             // chooseColorButton
             // 
-            this.chooseColorButton.Location = new System.Drawing.Point(3, 67);
+            this.chooseColorButton.Location = new System.Drawing.Point(3, 54);
             this.chooseColorButton.Name = "chooseColorButton";
             this.chooseColorButton.Size = new System.Drawing.Size(168, 29);
             this.chooseColorButton.TabIndex = 1;
-            this.chooseColorButton.Text = "Choose Color";
+            this.chooseColorButton.Text = "Choose Object Color";
             this.chooseColorButton.UseVisualStyleBackColor = true;
             this.chooseColorButton.Click += new System.EventHandler(this.chooseColorButton_Click);
             // 
@@ -172,30 +224,17 @@
             // 
             // colorDialog
             // 
-            this.colorDialog.Color = System.Drawing.Color.Red;
+            this.colorDialog.Color = System.Drawing.Color.Gold;
             // 
-            // interpolateCornersButton
+            // loadTextureButton
             // 
-            this.interpolateCornersButton.AutoSize = true;
-            this.interpolateCornersButton.Checked = true;
-            this.interpolateCornersButton.Location = new System.Drawing.Point(6, 345);
-            this.interpolateCornersButton.Name = "interpolateCornersButton";
-            this.interpolateCornersButton.Size = new System.Drawing.Size(157, 24);
-            this.interpolateCornersButton.TabIndex = 10;
-            this.interpolateCornersButton.TabStop = true;
-            this.interpolateCornersButton.Text = "Interpolate Corners";
-            this.interpolateCornersButton.UseVisualStyleBackColor = true;
-            // 
-            // interpolateEachButton
-            // 
-            this.interpolateEachButton.AutoSize = true;
-            this.interpolateEachButton.Location = new System.Drawing.Point(6, 375);
-            this.interpolateEachButton.Name = "interpolateEachButton";
-            this.interpolateEachButton.Size = new System.Drawing.Size(138, 24);
-            this.interpolateEachButton.TabIndex = 11;
-            this.interpolateEachButton.TabStop = true;
-            this.interpolateEachButton.Text = "Interpolate Each";
-            this.interpolateEachButton.UseVisualStyleBackColor = true;
+            this.loadTextureButton.Location = new System.Drawing.Point(3, 503);
+            this.loadTextureButton.Name = "loadTextureButton";
+            this.loadTextureButton.Size = new System.Drawing.Size(168, 29);
+            this.loadTextureButton.TabIndex = 14;
+            this.loadTextureButton.Text = "Load Texture";
+            this.loadTextureButton.UseVisualStyleBackColor = true;
+            this.loadTextureButton.Click += new System.EventHandler(this.loadTextureButton_Click);
             // 
             // Form1
             // 
@@ -236,5 +275,9 @@
         private TrackBar zBar;
         private RadioButton interpolateEachButton;
         private RadioButton interpolateCornersButton;
+        private Button lightColorButton;
+        private ColorDialog lightColorDialog;
+        private CheckBox drawTrianglesCheckbox;
+        private Button loadTextureButton;
     }
 }

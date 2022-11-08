@@ -89,5 +89,31 @@ namespace Graficzne2.Objects
             X = ca * X - sa * Y;
             Y = sa * X + ca * Y;
         }
+
+        public static Vector3d GetFromColor(Color color)
+        {
+            double x = (color.R - 127.0) / 128;
+            double y = (color.G - 127.0) / 128;
+            double z = color.B / 255.0;
+
+            var v = new Vector3d(x, y, z);
+            v.Normalize();
+
+            return v;
+        }
+
+        public Vector3d GetModifiedVector(Vector3d texture)
+        {
+            // M = [T,B,N]
+            var N = this;
+            var B = N * new Vector3d(0, 0, 1);
+            var T = B * N;
+
+            double x = texture.X * T.X + texture.Y * B.X + texture.Z * N.X;
+            double y = texture.X * T.Y + texture.Y * B.Y + texture.Z * N.Y;
+            double z = texture.X * T.Z + texture.Y * B.Z + texture.Z * N.Z;
+
+            return new Vector3d(x, y, z);
+        }
     }
 }
