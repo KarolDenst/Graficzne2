@@ -54,11 +54,13 @@
                 }
                 
                 aet = aet.OrderBy(p => p.GetX(i)).ToList();
-                int x1 = (int)aet[0].GetX(i);
-                int x2 = (int)aet[1].GetX(i);
-                if (eachPoint) bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useTexture);
-                else bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useTexture);
-                
+                for (int k = 0; k < aet.Count; k += 2)
+                {
+                    int x1 = (int)aet[k].GetX(i);
+                    int x2 = (int)aet[k + 1].GetX(i);
+                    if (eachPoint) bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useTexture);
+                    else bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useTexture);
+                }
             }
         }
 
