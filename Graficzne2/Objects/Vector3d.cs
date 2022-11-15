@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Graficzne2.Objects
+﻿namespace Graficzne2.Objects
 {
     internal struct Vector3d
     {

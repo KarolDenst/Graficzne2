@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Graficzne2.Objects;
+﻿using Graficzne2.Objects;
 
 namespace Graficzne2
 {
@@ -63,9 +58,9 @@ namespace Graficzne2
         public static Vector3d GetVector(Face face, Point p)
         {
             double area = face.Area;
-            Point p1 = face.P1.TwoD();
-            Point p2 = face.P2.TwoD();
-            Point p3 = face.P3.TwoD();
+            Point p1 = face.P1.To2d();
+            Point p2 = face.P2.To2d();
+            Point p3 = face.P3.To2d();
 
             double p1Area = Geometry.Get2dArea(p, p2, p3);
             double p2Area = Geometry.Get2dArea(p, p1, p3);

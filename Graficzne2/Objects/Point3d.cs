@@ -1,12 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Pkcs;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Graficzne2.Objects
+﻿namespace Graficzne2.Objects
 {
     internal struct Point3d
     {
@@ -50,7 +42,7 @@ namespace Graficzne2.Objects
             return new Point3d(p1.X - p2.X, p1.Y - p2.Y, p1.Z - p2.Z);
         }
 
-        public Point TwoD()
+        public Point To2d()
         {
             return new Point((int)X, (int)Y);
         }

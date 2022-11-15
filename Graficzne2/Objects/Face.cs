@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Graficzne2.Objects
+﻿namespace Graficzne2.Objects
 {
     internal class Face
     {
@@ -36,99 +28,37 @@ namespace Graficzne2.Objects
             Area = Get2dArea();
         }
 
-        public void ColorSolid(DirectBitmap bitmap, Color color)
+        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, bool useTexture, bool eachPoint)
         {
+            // I'm ussing the fact that points are sorted in the constructor so no need to sort them here
             int yMin = (int)P1.Y;
             int yMax = (int)P3.Y;
 
+            Point[] points = { P1.To2d(), P2.To2d(), P3.To2d() };
             List<Edge> aet = new List<Edge>();
-            aet.Add(new Edge(P1.TwoD(), P2.TwoD()));
-            aet.Add(new Edge(P1.TwoD(), P3.TwoD()));
+            aet.Add(new Edge(points[0], points[1]));
+            aet.Add(new Edge(points[0], points[^1]));
 
-            for (int i = yMin; i < yMax; i++)
+            for (int i = yMin; i <= yMax; i++)
             {
-                if (i == P2.Y)
+                for (int j = 1; j < points.Length - 1; j++)
                 {
-                    aet.Remove(new Edge(P1.TwoD(), P2.TwoD()));
-                    aet.Add(new Edge(P2.TwoD(), P3.TwoD()));
-                }
+                    if (i - 1 == points[j].Y)
+                    {
+                        if (points[j - 1].Y >= points[j].Y) aet.Add(new Edge(points[j - 1], points[j]));
+                        else aet.Remove(new Edge(points[j - 1], points[j]));
 
-                if (i == yMin)
-                {
-                    if (P1.Y != P2.Y) continue;
-                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, color);
-                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, color);
-                    continue;
+                        if (points[j + 1].Y >= points[j].Y) aet.Add(new Edge(points[j], points[j + 1]));
+                        else aet.Remove(new Edge(points[j], points[j + 1]));
+                    }
                 }
-
+                
                 aet = aet.OrderBy(p => p.GetX(i)).ToList();
                 int x1 = (int)aet[0].GetX(i);
                 int x2 = (int)aet[1].GetX(i);
-                bitmap.DrawScanLine(i, x1, x2, color);
-            }
-        }
-
-        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, bool useTexture = false)
-        {
-            int yMin = (int)P1.Y;
-            int yMax = (int)P3.Y;
-
-            List<Edge> aet = new List<Edge>();
-            aet.Add(new Edge(P1.TwoD(), P2.TwoD()));
-            aet.Add(new Edge(P1.TwoD(), P3.TwoD()));
-
-            for (int i = yMin; i < yMax; i++)
-            {
-                if (i == P2.Y)
-                {
-                    aet.Remove(new Edge(P1.TwoD(), P2.TwoD()));
-                    aet.Add(new Edge(P2.TwoD(), P3.TwoD()));
-                }
-
-                if (i == yMin)
-                {
-                    if (P1.Y != P2.Y) continue;
-                    if (P1.X > P2.X) bitmap.DrawScanLineFromCorners(i, (int)P2.X, (int)P1.X, this, light, objectColor, useTexture);
-                    else bitmap.DrawScanLineFromCorners(i, (int)P1.X, (int)P2.X, this, light, objectColor, useTexture);
-                    continue;
-                }
-
-                aet = aet.OrderBy(p => p.GetX(i)).ToList();
-                int x1 = (int)aet[0].GetX(i);
-                int x2 = (int)aet[1].GetX(i);
-                bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useTexture);
-            }
-        }
-
-        public void ColorEachPoint(DirectBitmap bitmap, Color objectColor, LightSource light, bool useTexture)
-        {
-            int yMin = (int)P1.Y;
-            int yMax = (int)P3.Y;
-
-            List<Edge> aet = new List<Edge>();
-            aet.Add(new Edge(P1.TwoD(), P2.TwoD()));
-            aet.Add(new Edge(P1.TwoD(), P3.TwoD()));
-
-            for (int i = yMin; i < yMax; i++)
-            {
-                if (i == P2.Y)
-                {
-                    aet.Remove(new Edge(P1.TwoD(), P2.TwoD()));
-                    aet.Add(new Edge(P2.TwoD(), P3.TwoD()));
-                }
-
-                if (i == yMin)
-                {
-                    if (P1.Y != P2.Y) continue;
-                    if (P1.X > P2.X) bitmap.DrawScanLine(i, (int)P2.X, (int)P1.X, this, light, objectColor, useTexture);
-                    else bitmap.DrawScanLine(i, (int)P1.X, (int)P2.X, this, light, objectColor, useTexture);
-                    continue;
-                }
-
-                aet = aet.OrderBy(p => p.GetX(i)).ToList();
-                int x1 = (int)aet[0].GetX(i);
-                int x2 = (int)aet[1].GetX(i);
-                bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useTexture);
+                if (eachPoint) bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useTexture);
+                else bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useTexture);
+                
             }
         }
 

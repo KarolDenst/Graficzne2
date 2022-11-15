@@ -30,6 +30,7 @@
         {
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loadObjectButton = new System.Windows.Forms.Button();
             this.resetTextureButton = new System.Windows.Forms.Button();
             this.loadTextureButton = new System.Windows.Forms.Button();
             this.drawTrianglesCheckbox = new System.Windows.Forms.CheckBox();
@@ -48,7 +49,6 @@
             this.drawButton = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
-            this.loadObjectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
@@ -90,6 +90,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // loadObjectButton
+            // 
+            this.loadObjectButton.Location = new System.Drawing.Point(6, 424);
+            this.loadObjectButton.Name = "loadObjectButton";
+            this.loadObjectButton.Size = new System.Drawing.Size(162, 29);
+            this.loadObjectButton.TabIndex = 16;
+            this.loadObjectButton.Text = "Load Object";
+            this.loadObjectButton.UseVisualStyleBackColor = true;
+            this.loadObjectButton.Click += new System.EventHandler(this.loadObjectButton_Click);
             // 
             // resetTextureButton
             // 
@@ -249,16 +259,6 @@
             // colorDialog
             // 
             this.colorDialog.Color = System.Drawing.Color.Gold;
-            // 
-            // loadObjectButton
-            // 
-            this.loadObjectButton.Location = new System.Drawing.Point(6, 424);
-            this.loadObjectButton.Name = "loadObjectButton";
-            this.loadObjectButton.Size = new System.Drawing.Size(162, 29);
-            this.loadObjectButton.TabIndex = 16;
-            this.loadObjectButton.Text = "Load Object";
-            this.loadObjectButton.UseVisualStyleBackColor = true;
-            this.loadObjectButton.Click += new System.EventHandler(this.loadObjectButton_Click);
             // 
             // Form1
             // 

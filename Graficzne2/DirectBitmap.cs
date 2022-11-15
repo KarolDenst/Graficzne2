@@ -1,13 +1,9 @@
-﻿// https://stackoverflow.com/questions/24701703/c-sharp-faster-alternatives-to-setpixel-and-getpixel-for-bitmaps-for-windows-f
-
-using Graficzne2;
+﻿using Graficzne2;
 using Graficzne2.Objects;
-using System.Drawing;
 using System.Drawing.Imaging;
-using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 
+// https://stackoverflow.com/questions/24701703/c-sharp-faster-alternatives-to-setpixel-and-getpixel-for-bitmaps-for-windows-f
 internal class DirectBitmap : IDisposable
 {
     public Bitmap Bitmap { get; private set; }
@@ -19,13 +15,14 @@ internal class DirectBitmap : IDisposable
 
     protected GCHandle BitsHandle { get; private set; }
 
-    public DirectBitmap(int width, int height)
+    public DirectBitmap(int width, int height, Bitmap texture)
     {
         Width = width;
         Height = height;
         Bits = new Int32[width * height];
         BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
         Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
+        SetUpTexture(texture);
     }
 
     public void SetPixel(int x, int y, Color colour)
@@ -83,7 +80,7 @@ internal class DirectBitmap : IDisposable
         Color colorP2 = light.GetColor(face.P2.GetVersorToPoint(light.LightLocation), v2, objectColor);
         Color colorP3 = light.GetColor(face.P3.GetVersorToPoint(light.LightLocation), v3, objectColor);
 
-        for (int x = x1; x <= x2; x++)
+        for (int x = x1 + 1; x <= x2; x++)
         {
             Color color = GetColor(face, colorP1, colorP2, colorP3, new Point(x, y));
             SetPixel(x, y, color);
@@ -92,7 +89,7 @@ internal class DirectBitmap : IDisposable
 
     public void DrawScanLine(int y, int x1, int x2, Face face, LightSource light, Color objectColor, bool useTexture)
     {
-        for (int x = x1; x <= x2; x++)
+        for (int x = x1 + 1; x <= x2; x++)
         {
             Point3d p = face.GetPointByXY(x, y);
 
@@ -108,9 +105,9 @@ internal class DirectBitmap : IDisposable
     private Color GetColor(Face face, Color p1Color, Color p2Color, Color p3Color, Point p)
     {
         double area = face.Area;
-        Point p1 = face.P1.TwoD();
-        Point p2 = face.P2.TwoD();
-        Point p3 = face.P3.TwoD();
+        Point p1 = face.P1.To2d();
+        Point p2 = face.P2.To2d();
+        Point p3 = face.P3.To2d();
 
         double p1Area = Geometry.Get2dArea(p, p2, p3);
         double p2Area = Geometry.Get2dArea(p, p1, p3);

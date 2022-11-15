@@ -1,8 +1,4 @@
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Timers;
-using System.Windows.Forms;
-using Graficzne2.Enums;
 using Graficzne2.Objects;
 using Timer = System.Windows.Forms.Timer;
 
@@ -16,7 +12,7 @@ namespace Graficzne2
         DirectBitmap bitmap;
         LightSource lightSource;
         Timer timer;
-        bool useTexture = false;
+        bool useTexture = true;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Form1()
@@ -27,15 +23,17 @@ namespace Graficzne2
             SetUpCanvas();
             SetUpLightSource();
             SetUpTimer();
-            SetUpFaces(Constants.PathToSphere);
+            SetUpFaces(Constants.SphereLocation);
             Draw();
-
-            var p = Directory.GetCurrentDirectory();
         }
 
         private void SetUpCanvas()
         {
-            bitmap = new DirectBitmap(canvas.Width, canvas.Height);
+            canvas.Height = 700;
+            canvas.Width = 700;
+
+            var texture = new Bitmap(Constants.DefaultTextureLocation);
+            bitmap = new DirectBitmap(canvas.Width, canvas.Height, texture);
             canvas.Image = bitmap.Bitmap;
             graphics = Graphics.FromImage(bitmap.Bitmap);
             graphics.Clear(Color.White);
@@ -70,37 +68,32 @@ namespace Graficzne2
             canvas.Refresh();
         }
 
-        private void ColorFacesSolid()
-        {
-            foreach(var face in faces)
-            {
-                face.ColorSolid(bitmap, colorDialog.Color);
-            }
-        }
-
         private void ColorFaces()
         {
             if (interpolateCornersButton.Checked)
             {
                 foreach (var face in faces)
                 {
-                    face.Color(bitmap, colorDialog.Color, lightSource, useTexture);
+                    face.Color(bitmap, colorDialog.Color, lightSource, useTexture, true);
                 }
             }
             else if (interpolateEachButton.Checked)
             {
                 foreach (var face in faces)
                 {
-                    face.ColorEachPoint(bitmap, colorDialog.Color, lightSource, useTexture);
+                    face.Color(bitmap, colorDialog.Color, lightSource, useTexture, false);
                 }
             }
         }
 
         private void Draw()
         {
+            Stopwatch s = new Stopwatch();
+            s.Start();
             ColorFaces();
             if (drawTrianglesCheckbox.Checked) DrawTriangles();
             canvas.Refresh();
+            s.Stop();
         }
 
         private void DrawIfTimerNotRunning()
@@ -177,8 +170,7 @@ namespace Graficzne2
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = "Open Texture";
-                dlg.InitialDirectory = Constants.TextureLocation;
-                dlg.AutoUpgradeEnabled = false;
+                dlg.InitialDirectory = Path.GetFullPath(Constants.TextureLocation);
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -200,8 +192,7 @@ namespace Graficzne2
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = "Open Object";
-                dlg.InitialDirectory = Constants.ObjectLocation;
-                dlg.AutoUpgradeEnabled = false;
+                dlg.InitialDirectory = Path.GetFullPath(Constants.ObjectLocation);
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
