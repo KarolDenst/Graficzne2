@@ -83,7 +83,7 @@ namespace Graficzne2
         {
             Stopwatch s = new Stopwatch();
             s.Start();
-            using (graphics = Graphics.FromImage(bitmap.Bitmap)) graphics.Clear(Color.White);
+            graphics.Clear(Color.White);
 
             ColorFaces();
             if (drawTrianglesCheckbox.Checked) DrawTriangles();

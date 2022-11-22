@@ -1,11 +1,5 @@
 ﻿using Graficzne2.Enums;
 using Graficzne2.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Graficzne2
 {
@@ -23,9 +17,9 @@ namespace Graficzne2
             Direction = CloudMoveDirection.Right;
 
             Point p1 = new Point(200, 200);
-            Point p2 = new Point(401, 201);
+            Point p2 = new Point(440, 220);
             Point p3 = new Point(400, 400);
-            Point p5 = new Point(201, 401);
+            Point p5 = new Point(220, 440);
             Point p4 = new Point(300, 300);
 
             Points = new Point[] { p1, p2, p3, p4, p5};

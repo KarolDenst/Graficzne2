@@ -9,3 +9,5 @@ Aby załadować mapę normalną wybieramy „Load Normals” i wybieramy dowolny
 Aby pozbyć się Mapy Normalnej klikamy „Reset Normals”.
 Aby załadować teksturę wybieramy „Load Texture” i wybieramy dowolny obrazek.
 Aby używać tekstury musi być zaznaczony checkbox "Use Texture".
+
+If the program is lagging in Constants.cs there is a "fps" variable. Change it to something smaller to cap fps to a lower number.
