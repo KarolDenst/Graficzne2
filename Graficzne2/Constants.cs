@@ -14,5 +14,6 @@
         public static int LightSourceY = 400;
         public static int RotationDegrees = 20;
         public static int fps = 5;
+        public static int CloudMovement = 20;
     }
 }

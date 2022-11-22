@@ -13,6 +13,7 @@ namespace Graficzne2
         LightSource lightSource;
         Timer timer;
         bool useNormals = true;
+        Cloud cloud;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Form1()
@@ -22,6 +23,7 @@ namespace Graficzne2
 
             SetUpCanvas();
             SetUpLightSource();
+            cloud = new Cloud(lightSource.LightLocation.Z / 3);
             SetUpTimer();
             SetUpFaces(Constants.SphereLocation);
             Draw();
@@ -81,10 +83,19 @@ namespace Graficzne2
         {
             Stopwatch s = new Stopwatch();
             s.Start();
+            using (graphics = Graphics.FromImage(bitmap.Bitmap)) graphics.Clear(Color.White);
+
             ColorFaces();
             if (drawTrianglesCheckbox.Checked) DrawTriangles();
+            if (cloudCheckBox.Checked) DrawCloud();
             canvas.Refresh();
             s.Stop();
+        }
+
+        private void DrawCloud()
+        {
+            cloud.DrawShadow(bitmap, lightSource);
+            cloud.DrawCloud(bitmap);
         }
 
         private void DrawIfTimerNotRunning()
@@ -95,6 +106,7 @@ namespace Graficzne2
         private void OnTimedEvent(object source, EventArgs e)
         {
             lightSource.Rotate(Constants.RotationDegrees, canvas.Width / 2, canvas.Height / 2);
+            cloud.Move(bitmap.Width, Constants.CloudMovement);
             Draw();
         }
 
@@ -129,6 +141,12 @@ namespace Graficzne2
             DrawIfTimerNotRunning();
         }
 
+        private void kaBar_Scroll(object sender, EventArgs e)
+        {
+            lightSource.Ka = (double)kaBar.Value / 10;
+            DrawIfTimerNotRunning();
+        }
+
         private void mBar_Scroll(object sender, EventArgs e)
         {
             lightSource.M = mBar.Value * 10 + 1;
@@ -138,6 +156,7 @@ namespace Graficzne2
         private void zBar_Scroll(object sender, EventArgs e)
         {
             lightSource.LightLocation.Z = Constants.MinLightHeight + zBar.Value * 50;
+            cloud.Height = lightSource.LightLocation.Z / 3;
             DrawIfTimerNotRunning();
         }
 
@@ -212,6 +231,11 @@ namespace Graficzne2
                     DrawIfTimerNotRunning();
                 }
             }
+        }
+
+        private void cloudCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawIfTimerNotRunning();
         }
     }
 }

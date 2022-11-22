@@ -6,6 +6,7 @@ namespace Graficzne2
     {
         public double Kd;
         public double Ks;
+        public double Ka;
         public double M;
         public Color LightColor;
         public Point3d LightLocation;
@@ -28,11 +29,11 @@ namespace Graficzne2
             double cos2 = Math.Pow(Vector3d.GetCosBetweenNormal(V, R), M);
             if (cos2 < 0) cos2 = 0;
 
-            double red = (objectColor.R * LightColor.R) * (Kd * cos1 + Ks * cos2) / 255;
+            double red = (objectColor.R * LightColor.R) * (Kd * cos1 + Ks * cos2) / 255 + Ka * 255;
             if (red > 255) red = 255;
-            double green = (objectColor.G * LightColor.G) * (Kd * cos1 + Ks * cos2) / 255;
+            double green = (objectColor.G * LightColor.G) * (Kd * cos1 + Ks * cos2) / 255 + Ka * 255;
             if (green > 255) green = 255;
-            double blue = (objectColor.B * LightColor.B) * (Kd * cos1 + Ks * cos2) / 255;
+            double blue = (objectColor.B * LightColor.B) * (Kd * cos1 + Ks * cos2) / 255 + Ka * 255;
             if (blue > 255) blue = 255;
 
             return Color.FromArgb(255, (int)red, (int)green, (int)blue);

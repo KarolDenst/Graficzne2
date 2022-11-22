@@ -30,6 +30,10 @@
         {
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cloudCheckBox = new System.Windows.Forms.CheckBox();
+            this.kaBar = new System.Windows.Forms.TrackBar();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textureButton = new System.Windows.Forms.Button();
             this.textureCheckBox = new System.Windows.Forms.CheckBox();
             this.loadObjectButton = new System.Windows.Forms.Button();
             this.resetNormalsButton = new System.Windows.Forms.Button();
@@ -50,9 +54,9 @@
             this.drawButton = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
-            this.textureButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kaBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksBar)).BeginInit();
@@ -69,6 +73,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cloudCheckBox);
+            this.groupBox1.Controls.Add(this.kaBar);
+            this.groupBox1.Controls.Add(this.textBox5);
             this.groupBox1.Controls.Add(this.textureButton);
             this.groupBox1.Controls.Add(this.textureCheckBox);
             this.groupBox1.Controls.Add(this.loadObjectButton);
@@ -95,12 +102,53 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // cloudCheckBox
+            // 
+            this.cloudCheckBox.AutoSize = true;
+            this.cloudCheckBox.Checked = true;
+            this.cloudCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cloudCheckBox.Location = new System.Drawing.Point(2, 404);
+            this.cloudCheckBox.Name = "cloudCheckBox";
+            this.cloudCheckBox.Size = new System.Drawing.Size(98, 24);
+            this.cloudCheckBox.TabIndex = 21;
+            this.cloudCheckBox.Text = "Use Cloud";
+            this.cloudCheckBox.UseVisualStyleBackColor = true;
+            this.cloudCheckBox.CheckedChanged += new System.EventHandler(this.cloudCheckBox_CheckedChanged);
+            // 
+            // kaBar
+            // 
+            this.kaBar.Location = new System.Drawing.Point(41, 196);
+            this.kaBar.Name = "kaBar";
+            this.kaBar.Size = new System.Drawing.Size(130, 56);
+            this.kaBar.TabIndex = 20;
+            this.kaBar.Value = 1;
+            this.kaBar.Scroll += new System.EventHandler(this.kaBar_Scroll);
+            // 
+            // textBox5
+            // 
+            this.textBox5.Enabled = false;
+            this.textBox5.Location = new System.Drawing.Point(2, 196);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(37, 27);
+            this.textBox5.TabIndex = 19;
+            this.textBox5.Text = "KA";
+            // 
+            // textureButton
+            // 
+            this.textureButton.Location = new System.Drawing.Point(-1, 605);
+            this.textureButton.Name = "textureButton";
+            this.textureButton.Size = new System.Drawing.Size(168, 29);
+            this.textureButton.TabIndex = 18;
+            this.textureButton.Text = "Load Texture";
+            this.textureButton.UseVisualStyleBackColor = true;
+            this.textureButton.Click += new System.EventHandler(this.textureButton_Click);
+            // 
             // textureCheckBox
             // 
             this.textureCheckBox.AutoSize = true;
             this.textureCheckBox.Checked = true;
             this.textureCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.textureCheckBox.Location = new System.Drawing.Point(6, 329);
+            this.textureCheckBox.Location = new System.Drawing.Point(3, 380);
             this.textureCheckBox.Name = "textureCheckBox";
             this.textureCheckBox.Size = new System.Drawing.Size(107, 24);
             this.textureCheckBox.TabIndex = 17;
@@ -110,7 +158,7 @@
             // 
             // loadObjectButton
             // 
-            this.loadObjectButton.Location = new System.Drawing.Point(6, 424);
+            this.loadObjectButton.Location = new System.Drawing.Point(2, 496);
             this.loadObjectButton.Name = "loadObjectButton";
             this.loadObjectButton.Size = new System.Drawing.Size(162, 29);
             this.loadObjectButton.TabIndex = 16;
@@ -120,7 +168,7 @@
             // 
             // resetNormalsButton
             // 
-            this.resetNormalsButton.Location = new System.Drawing.Point(3, 494);
+            this.resetNormalsButton.Location = new System.Drawing.Point(-1, 566);
             this.resetNormalsButton.Name = "resetNormalsButton";
             this.resetNormalsButton.Size = new System.Drawing.Size(168, 29);
             this.resetNormalsButton.TabIndex = 15;
@@ -130,7 +178,7 @@
             // 
             // loadNormalsButton
             // 
-            this.loadNormalsButton.Location = new System.Drawing.Point(3, 459);
+            this.loadNormalsButton.Location = new System.Drawing.Point(-1, 531);
             this.loadNormalsButton.Name = "loadNormalsButton";
             this.loadNormalsButton.Size = new System.Drawing.Size(168, 29);
             this.loadNormalsButton.TabIndex = 14;
@@ -141,7 +189,7 @@
             // drawTrianglesCheckbox
             // 
             this.drawTrianglesCheckbox.AutoSize = true;
-            this.drawTrianglesCheckbox.Location = new System.Drawing.Point(6, 299);
+            this.drawTrianglesCheckbox.Location = new System.Drawing.Point(3, 350);
             this.drawTrianglesCheckbox.Name = "drawTrianglesCheckbox";
             this.drawTrianglesCheckbox.Size = new System.Drawing.Size(129, 24);
             this.drawTrianglesCheckbox.TabIndex = 13;
@@ -163,7 +211,7 @@
             // 
             this.interpolateEachButton.AutoSize = true;
             this.interpolateEachButton.Checked = true;
-            this.interpolateEachButton.Location = new System.Drawing.Point(6, 384);
+            this.interpolateEachButton.Location = new System.Drawing.Point(2, 456);
             this.interpolateEachButton.Name = "interpolateEachButton";
             this.interpolateEachButton.Size = new System.Drawing.Size(138, 24);
             this.interpolateEachButton.TabIndex = 11;
@@ -175,7 +223,7 @@
             // interpolateCornersButton
             // 
             this.interpolateCornersButton.AutoSize = true;
-            this.interpolateCornersButton.Location = new System.Drawing.Point(6, 354);
+            this.interpolateCornersButton.Location = new System.Drawing.Point(2, 426);
             this.interpolateCornersButton.Name = "interpolateCornersButton";
             this.interpolateCornersButton.Size = new System.Drawing.Size(157, 24);
             this.interpolateCornersButton.TabIndex = 10;
@@ -186,7 +234,7 @@
             // textBox4
             // 
             this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(3, 256);
+            this.textBox4.Location = new System.Drawing.Point(0, 298);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(36, 27);
             this.textBox4.TabIndex = 9;
@@ -194,7 +242,7 @@
             // 
             // zBar
             // 
-            this.zBar.Location = new System.Drawing.Point(38, 256);
+            this.zBar.Location = new System.Drawing.Point(32, 298);
             this.zBar.Name = "zBar";
             this.zBar.Size = new System.Drawing.Size(133, 56);
             this.zBar.TabIndex = 8;
@@ -203,7 +251,7 @@
             // textBox3
             // 
             this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(3, 214);
+            this.textBox3.Location = new System.Drawing.Point(0, 258);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(36, 27);
             this.textBox3.TabIndex = 7;
@@ -212,7 +260,7 @@
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(3, 166);
+            this.textBox2.Location = new System.Drawing.Point(0, 157);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(36, 27);
             this.textBox2.TabIndex = 6;
@@ -229,7 +277,7 @@
             // 
             // mBar
             // 
-            this.mBar.Location = new System.Drawing.Point(38, 214);
+            this.mBar.Location = new System.Drawing.Point(32, 258);
             this.mBar.Name = "mBar";
             this.mBar.Size = new System.Drawing.Size(139, 56);
             this.mBar.TabIndex = 4;
@@ -237,7 +285,7 @@
             // 
             // ksBar
             // 
-            this.ksBar.Location = new System.Drawing.Point(38, 166);
+            this.ksBar.Location = new System.Drawing.Point(35, 157);
             this.ksBar.Name = "ksBar";
             this.ksBar.Size = new System.Drawing.Size(136, 56);
             this.ksBar.TabIndex = 3;
@@ -246,7 +294,7 @@
             // 
             // kdBar
             // 
-            this.kdBar.Location = new System.Drawing.Point(38, 124);
+            this.kdBar.Location = new System.Drawing.Point(35, 115);
             this.kdBar.Name = "kdBar";
             this.kdBar.Size = new System.Drawing.Size(130, 56);
             this.kdBar.TabIndex = 2;
@@ -277,16 +325,6 @@
             // 
             this.colorDialog.Color = System.Drawing.Color.Gold;
             // 
-            // textureButton
-            // 
-            this.textureButton.Location = new System.Drawing.Point(3, 533);
-            this.textureButton.Name = "textureButton";
-            this.textureButton.Size = new System.Drawing.Size(168, 29);
-            this.textureButton.TabIndex = 18;
-            this.textureButton.Text = "Load Texture";
-            this.textureButton.UseVisualStyleBackColor = true;
-            this.textureButton.Click += new System.EventHandler(this.textureButton_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -301,6 +339,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kaBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksBar)).EndInit();
@@ -334,5 +373,8 @@
         private Button loadObjectButton;
         private CheckBox textureCheckBox;
         private Button textureButton;
+        private TrackBar kaBar;
+        private TextBox textBox5;
+        private CheckBox cloudCheckBox;
     }
 }

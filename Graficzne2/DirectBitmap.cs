@@ -113,6 +113,21 @@ internal class DirectBitmap : IDisposable
         }
     }
 
+    public void DrawCloudScanLine(int y, int x1, int x2, Color color)
+    {
+        if (y >= Height || y <= 0) 
+            return;
+
+        x1 = Math.Max(x1, 1);
+        x2 = Math.Min(x2, Width - 1);
+
+
+        for (int x = x1 + 1; x <= x2; x++)
+        {
+            SetPixel(x, y, color);
+        }
+    }
+
     private Color GetColor(Face face, Color p1Color, Color p2Color, Color p3Color, Point p)
     {
         double area = face.Area;
@@ -162,4 +177,5 @@ internal class DirectBitmap : IDisposable
             }
         }
     }
+
 }
