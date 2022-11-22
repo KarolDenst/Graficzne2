@@ -12,7 +12,7 @@ namespace Graficzne2
         DirectBitmap bitmap;
         LightSource lightSource;
         Timer timer;
-        bool useTexture = true;
+        bool useNormals = true;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Form1()
@@ -32,8 +32,9 @@ namespace Graficzne2
             canvas.Height = 700;
             canvas.Width = 700;
 
+            var normals = new Bitmap(Constants.DefaultNormalsLocation);
             var texture = new Bitmap(Constants.DefaultTextureLocation);
-            bitmap = new DirectBitmap(canvas.Width, canvas.Height, texture);
+            bitmap = new DirectBitmap(canvas.Width, canvas.Height, normals, texture);
             canvas.Image = bitmap.Bitmap;
             graphics = Graphics.FromImage(bitmap.Bitmap);
             graphics.Clear(Color.White);
@@ -70,19 +71,9 @@ namespace Graficzne2
 
         private void ColorFaces()
         {
-            if (interpolateCornersButton.Checked)
+            foreach (var face in faces)
             {
-                foreach (var face in faces)
-                {
-                    face.Color(bitmap, colorDialog.Color, lightSource, useTexture, true);
-                }
-            }
-            else if (interpolateEachButton.Checked)
-            {
-                foreach (var face in faces)
-                {
-                    face.Color(bitmap, colorDialog.Color, lightSource, useTexture, false);
-                }
+                face.Color(bitmap, colorDialog.Color, lightSource, useNormals, interpolateCornersButton.Checked, textureCheckBox.Checked);
             }
         }
 
@@ -165,25 +156,25 @@ namespace Graficzne2
             DrawIfTimerNotRunning();
         }
 
-        private void loadTextureButton_Click(object sender, EventArgs e)
+        private void loadNormalsButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = "Open Texture";
-                dlg.InitialDirectory = Path.GetFullPath(Constants.TextureLocation);
+                dlg.Title = "Open Normals";
+                dlg.InitialDirectory = Path.GetFullPath(Constants.NormalsLocation);
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    bitmap.SetUpTexture(new Bitmap(dlg.FileName));
-                    useTexture = true;
+                    bitmap.SetUpNormalMap(new Bitmap(dlg.FileName));
+                    useNormals = true;
                     DrawIfTimerNotRunning();
                 }
             }
         }
 
-        private void resetTextureButton_Click(object sender, EventArgs e)
+        private void resetNormalsButton_Click(object sender, EventArgs e)
         {
-            useTexture = false;
+            useNormals = false;
             DrawIfTimerNotRunning();
         }
 
@@ -198,6 +189,26 @@ namespace Graficzne2
                 {
                     SetUpFaces(dlg.FileName);
                     SetUpCanvas();
+                    DrawIfTimerNotRunning();
+                }
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawIfTimerNotRunning();
+        }
+
+        private void textureButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Texture";
+                dlg.InitialDirectory = Path.GetFullPath(Constants.TexturesLocation);
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    bitmap.SetUpTexture(new Bitmap(dlg.FileName));
                     DrawIfTimerNotRunning();
                 }
             }

@@ -28,7 +28,7 @@
             Area = Get2dArea();
         }
 
-        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, bool useTexture, bool eachPoint)
+        public void Color(DirectBitmap bitmap, Color objectColor, LightSource light, bool useNormals, bool eachPoint, bool useTexture)
         {
             // I'm ussing the fact that points are sorted in the constructor so no need to sort them here
             int yMin = (int)P1.Y;
@@ -58,8 +58,8 @@
                 {
                     int x1 = (int)aet[k].GetX(i);
                     int x2 = (int)aet[k + 1].GetX(i);
-                    if (eachPoint) bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useTexture);
-                    else bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useTexture);
+                    if (eachPoint) bitmap.DrawScanLineFromCorners(i, x1, x2, this, light, objectColor, useNormals, useTexture);
+                    else bitmap.DrawScanLine(i, x1, x2, this, light, objectColor, useNormals, useTexture);
                 }
             }
         }

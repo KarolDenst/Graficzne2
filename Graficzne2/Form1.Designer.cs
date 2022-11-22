@@ -30,9 +30,10 @@
         {
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textureCheckBox = new System.Windows.Forms.CheckBox();
             this.loadObjectButton = new System.Windows.Forms.Button();
-            this.resetTextureButton = new System.Windows.Forms.Button();
-            this.loadTextureButton = new System.Windows.Forms.Button();
+            this.resetNormalsButton = new System.Windows.Forms.Button();
+            this.loadNormalsButton = new System.Windows.Forms.Button();
             this.drawTrianglesCheckbox = new System.Windows.Forms.CheckBox();
             this.lightColorButton = new System.Windows.Forms.Button();
             this.interpolateEachButton = new System.Windows.Forms.RadioButton();
@@ -49,6 +50,7 @@
             this.drawButton = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
+            this.textureButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zBar)).BeginInit();
@@ -67,9 +69,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textureButton);
+            this.groupBox1.Controls.Add(this.textureCheckBox);
             this.groupBox1.Controls.Add(this.loadObjectButton);
-            this.groupBox1.Controls.Add(this.resetTextureButton);
-            this.groupBox1.Controls.Add(this.loadTextureButton);
+            this.groupBox1.Controls.Add(this.resetNormalsButton);
+            this.groupBox1.Controls.Add(this.loadNormalsButton);
             this.groupBox1.Controls.Add(this.drawTrianglesCheckbox);
             this.groupBox1.Controls.Add(this.lightColorButton);
             this.groupBox1.Controls.Add(this.interpolateEachButton);
@@ -91,6 +95,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // textureCheckBox
+            // 
+            this.textureCheckBox.AutoSize = true;
+            this.textureCheckBox.Checked = true;
+            this.textureCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.textureCheckBox.Location = new System.Drawing.Point(6, 329);
+            this.textureCheckBox.Name = "textureCheckBox";
+            this.textureCheckBox.Size = new System.Drawing.Size(107, 24);
+            this.textureCheckBox.TabIndex = 17;
+            this.textureCheckBox.Text = "Use Texture";
+            this.textureCheckBox.UseVisualStyleBackColor = true;
+            this.textureCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // loadObjectButton
             // 
             this.loadObjectButton.Location = new System.Drawing.Point(6, 424);
@@ -101,25 +118,25 @@
             this.loadObjectButton.UseVisualStyleBackColor = true;
             this.loadObjectButton.Click += new System.EventHandler(this.loadObjectButton_Click);
             // 
-            // resetTextureButton
+            // resetNormalsButton
             // 
-            this.resetTextureButton.Location = new System.Drawing.Point(3, 512);
-            this.resetTextureButton.Name = "resetTextureButton";
-            this.resetTextureButton.Size = new System.Drawing.Size(168, 29);
-            this.resetTextureButton.TabIndex = 15;
-            this.resetTextureButton.Text = "Reset Texture";
-            this.resetTextureButton.UseVisualStyleBackColor = true;
-            this.resetTextureButton.Click += new System.EventHandler(this.resetTextureButton_Click);
+            this.resetNormalsButton.Location = new System.Drawing.Point(3, 494);
+            this.resetNormalsButton.Name = "resetNormalsButton";
+            this.resetNormalsButton.Size = new System.Drawing.Size(168, 29);
+            this.resetNormalsButton.TabIndex = 15;
+            this.resetNormalsButton.Text = "Reset Normals";
+            this.resetNormalsButton.UseVisualStyleBackColor = true;
+            this.resetNormalsButton.Click += new System.EventHandler(this.resetNormalsButton_Click);
             // 
-            // loadTextureButton
+            // loadNormalsButton
             // 
-            this.loadTextureButton.Location = new System.Drawing.Point(3, 477);
-            this.loadTextureButton.Name = "loadTextureButton";
-            this.loadTextureButton.Size = new System.Drawing.Size(168, 29);
-            this.loadTextureButton.TabIndex = 14;
-            this.loadTextureButton.Text = "Load Texture";
-            this.loadTextureButton.UseVisualStyleBackColor = true;
-            this.loadTextureButton.Click += new System.EventHandler(this.loadTextureButton_Click);
+            this.loadNormalsButton.Location = new System.Drawing.Point(3, 459);
+            this.loadNormalsButton.Name = "loadNormalsButton";
+            this.loadNormalsButton.Size = new System.Drawing.Size(168, 29);
+            this.loadNormalsButton.TabIndex = 14;
+            this.loadNormalsButton.Text = "Load Normals";
+            this.loadNormalsButton.UseVisualStyleBackColor = true;
+            this.loadNormalsButton.Click += new System.EventHandler(this.loadNormalsButton_Click);
             // 
             // drawTrianglesCheckbox
             // 
@@ -146,7 +163,7 @@
             // 
             this.interpolateEachButton.AutoSize = true;
             this.interpolateEachButton.Checked = true;
-            this.interpolateEachButton.Location = new System.Drawing.Point(6, 375);
+            this.interpolateEachButton.Location = new System.Drawing.Point(6, 384);
             this.interpolateEachButton.Name = "interpolateEachButton";
             this.interpolateEachButton.Size = new System.Drawing.Size(138, 24);
             this.interpolateEachButton.TabIndex = 11;
@@ -158,7 +175,7 @@
             // interpolateCornersButton
             // 
             this.interpolateCornersButton.AutoSize = true;
-            this.interpolateCornersButton.Location = new System.Drawing.Point(6, 345);
+            this.interpolateCornersButton.Location = new System.Drawing.Point(6, 354);
             this.interpolateCornersButton.Name = "interpolateCornersButton";
             this.interpolateCornersButton.Size = new System.Drawing.Size(157, 24);
             this.interpolateCornersButton.TabIndex = 10;
@@ -260,6 +277,16 @@
             // 
             this.colorDialog.Color = System.Drawing.Color.Gold;
             // 
+            // textureButton
+            // 
+            this.textureButton.Location = new System.Drawing.Point(3, 533);
+            this.textureButton.Name = "textureButton";
+            this.textureButton.Size = new System.Drawing.Size(168, 29);
+            this.textureButton.TabIndex = 18;
+            this.textureButton.Text = "Load Texture";
+            this.textureButton.UseVisualStyleBackColor = true;
+            this.textureButton.Click += new System.EventHandler(this.textureButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -302,8 +329,10 @@
         private Button lightColorButton;
         private ColorDialog lightColorDialog;
         private CheckBox drawTrianglesCheckbox;
-        private Button loadTextureButton;
-        private Button resetTextureButton;
+        private Button loadNormalsButton;
+        private Button resetNormalsButton;
         private Button loadObjectButton;
+        private CheckBox textureCheckBox;
+        private Button textureButton;
     }
 }
