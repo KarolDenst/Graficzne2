@@ -1,4 +1,5 @@
 ﻿using Graficzne2.Objects;
+using System.Globalization;
 
 namespace Graficzne2
 {
@@ -22,27 +23,27 @@ namespace Graficzne2
                         switch (strings[0])
                         {
                             case "v":
-                                double y = (Convert.ToDouble(strings[1]) + offset) * scale;
-                                double z = (Convert.ToDouble(strings[2])) * scale;
-                                double x = (Convert.ToDouble(strings[3]) + offset) * scale;
+                                double y = (Convert.ToDouble(strings[1], CultureInfo.InvariantCulture) + offset) * scale;
+                                double z = (Convert.ToDouble(strings[2], CultureInfo.InvariantCulture)) * scale;
+                                double x = (Convert.ToDouble(strings[3], CultureInfo.InvariantCulture) + offset) * scale;
                                 points.Add(new Point3d((int)x, (int)y, (int)z));
                                 break;
                             case "vn":
-                                double yn = Convert.ToDouble(strings[1]);
-                                double zn = Convert.ToDouble(strings[2]);
-                                double xn = Convert.ToDouble(strings[3]);
+                                double yn = Convert.ToDouble(strings[1], CultureInfo.InvariantCulture);
+                                double zn = Convert.ToDouble(strings[2], CultureInfo.InvariantCulture);
+                                double xn = Convert.ToDouble(strings[3], CultureInfo.InvariantCulture);
                                 normals.Add(new Vector3d(xn, yn, zn));
                                 break;
                             case "f":
                                 string[] vertexes = strings[1].Split('/');
-                                int p1 = Convert.ToInt32(vertexes[0]) - 1;
-                                int v1 = Convert.ToInt32(vertexes[2]) - 1;
+                                int p1 = Convert.ToInt32(vertexes[0], CultureInfo.InvariantCulture) - 1;
+                                int v1 = Convert.ToInt32(vertexes[2], CultureInfo.InvariantCulture) - 1;
                                 vertexes = strings[2].Split('/');
-                                int p2 = Convert.ToInt32(vertexes[0]) - 1;
-                                int v2 = Convert.ToInt32(vertexes[2]) - 1;
+                                int p2 = Convert.ToInt32(vertexes[0], CultureInfo.InvariantCulture) - 1;
+                                int v2 = Convert.ToInt32(vertexes[2], CultureInfo.InvariantCulture) - 1;
                                 vertexes = strings[3].Split('/');
-                                int p3 = Convert.ToInt32(vertexes[0]) - 1;
-                                int v3 = Convert.ToInt32(vertexes[2]) - 1;
+                                int p3 = Convert.ToInt32(vertexes[0], CultureInfo.InvariantCulture) - 1;
+                                int v3 = Convert.ToInt32(vertexes[2], CultureInfo.InvariantCulture) - 1;
                                 faces.Add(new Face((points[p1], normals[v1]), (points[p2], normals[v2]), (points[p3], normals[v3])));
                                 break;
                             default:
